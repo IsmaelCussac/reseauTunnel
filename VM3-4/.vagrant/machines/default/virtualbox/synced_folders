@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant":{"owner":"etu","guestpath":"/vagrant","hostpath":"/filer/etudiants/g3/c1102541/reseau/projet/VM3-4","disabled":false},"/mnt/partage":{"create":true,"owner":"etu","guestpath":"/mnt/partage","hostpath":"/filer/etudiants/g3/c1102541/reseau/projet/partage","disabled":false}}}
