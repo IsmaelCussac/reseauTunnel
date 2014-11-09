@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 ##### Vos Configurations
   # Nom de la VM
-  config.vm.hostname = "VM3"
+  config.vm.hostname = "VM1-6"
   # "box" préinstallée de base
   config.vm.box = "debian-tp"
 

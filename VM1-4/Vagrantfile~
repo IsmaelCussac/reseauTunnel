@@ -15,12 +15,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Ajout d'une interface réseau (privée)
   config.vm.network "private_network", ip:"0.0.0.0", auto_config: false, virtualbox__intnet: "LAN1" 
+  config.vm.network "private_network", ip:"0.0.0.0", auto_config: false, virtualbox__intnet: "LAN3" 
 
 
 ##### NE PAS MODIFIER CETTE PARTIE
 
-  config.ssh.username = "vagrant"
-  config.ssh.password = "vagrant"
+
+#  config.ssh.username = "vagrant"
+#  config.ssh.password = "vagrant"
 
   config.vm.synced_folder ".", "/vagrant", owner: "etu"
   config.vm.synced_folder "../partage", "/mnt/partage", create: true, owner: "etu" 

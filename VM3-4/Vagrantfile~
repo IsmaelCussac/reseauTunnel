@@ -9,13 +9,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 ##### Vos Configurations
   # Nom de la VM
-  config.vm.hostname = "VM3"
+  config.vm.hostname = "VM3-4"
   # "box" préinstallée de base
   config.vm.box = "debian-tp"
 
   # Ajout d'une interface réseau (privée)
   config.vm.network "private_network", ip:"0.0.0.0", auto_config: false, virtualbox__intnet: "LAN2" 
-
+  config.vm.network "private_network", ip:"0.0.0.0", auto_config: false, virtualbox__intnet: "LAN4" 
 
 ##### NE PAS MODIFIER CETTE PARTIE
 
