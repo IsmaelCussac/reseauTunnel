@@ -16,8 +16,5 @@ int main (int argc, char **argv){
 		tun_copy(src, 1);
 	}
 	
-		
-	
-
 	return 0;
 }
