@@ -1,7 +1,0 @@
-#!/bin/bash
-
-cd ../VM1-4
-vagrant halt
-vagrant destroy --force
-
-
