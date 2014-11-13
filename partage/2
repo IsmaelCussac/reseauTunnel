@@ -1,0 +1,53 @@
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...Failed to bring up eth1.
+done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...Failed to bring up eth1.
+done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...RTNETLINK answers: No such process
+done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...RTNETLINK answers: No such process
+Failed to bring up eth1.
+done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.

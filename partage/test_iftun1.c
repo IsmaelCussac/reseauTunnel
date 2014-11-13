@@ -1,5 +1,6 @@
 #include "iftun.h"
 
+#define PORT 123
 
 int main (int argc, char **argv){
 
@@ -10,6 +11,9 @@ int main (int argc, char **argv){
 	src = tun_alloc(dev2);
 	
 	system("./configure-tun.sh");
+	
+	//int out = ext_out();
+	//int in = ext_in(PORT, "172.16.1.10", src);
 	
 	
 	while(1){

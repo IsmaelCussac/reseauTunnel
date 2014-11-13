@@ -1,0 +1,3 @@
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...Failed to bring up eth1.
+done.

@@ -7,7 +7,7 @@ eth1:
    - proto: none
    - ipaddr: 172.16.2.156
    - netmask: 255.255.255.240
-   - gateway: 172.16.2.151
+#   - gateway: 172.16.2.151
 
 
 #vers VM2-6
@@ -25,14 +25,6 @@ eth2:
    - ipv6addr: fc00:1234:1::16      
    - ipv6netmask: 64
    - ipv6gateway: fc00:1234:1::26
- 
- 
-   
-# active le relai ipv4 
-net.ipv4.ip_forward:
-  sysctl:
-    - present
-    - value: 1
   
 ip route del default:
    cmd:

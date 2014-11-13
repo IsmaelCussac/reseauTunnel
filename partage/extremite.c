@@ -4,6 +4,42 @@
 #define MAXLIGNE 80
 #define CIAO "Au revoir ...\n"
 
+
+	/* echo des messages reÃ§us (le tout via le descripteur f) */
+
+void echo(int f, char* hote, char* port)
+{
+	ssize_t lu; /* nb d'octets reÃ§us */
+	char msg[MAXLIGNE+1]; /* tampons pour les communications */
+	char tampon[MAXLIGNE+1];
+	int pid = getpid(); /* pid du processus */
+	int compteur=0;
+
+
+	do { /* Faire echo et logguer */
+		lu = recv(f,tampon,MAXLIGNE,0);
+		if (lu > 0 )
+		{
+			compteur++;
+			tampon[lu] = '\0';
+			/* log */
+			fprintf(stderr,"[%s:%s](%i): %3i :%s",hote,port,pid,compteur,tampon);
+			snprintf(msg,MAXLIGNE,"> %s",tampon);
+			/* echo vers la sortie standard */
+			fprintf(stdout,"%s", msg);
+		} 
+		else {
+			break;
+		}
+	} 
+	while ( 1 );
+
+	/* le correspondant a quittÃ© */
+	send(f,CIAO,strlen(CIAO),0);
+	close(f);
+	fprintf(stderr,"[%s:%s](%i): Terminé.\n",hote,port,pid);
+}
+
 int ext_out (void){
 
 	int s,n; /* descripteurs de socket */
@@ -18,7 +54,7 @@ int ext_out (void){
 	fprintf(stderr,"Ecoute sur le port %s\n",port);
 	err = getaddrinfo(NULL,port,&indic,&resol);
 	if (err<0){
-		fprintf(stderr,"RÃ©solution: %s\n",gai_strerror(err));
+		fprintf(stderr,"Résolution: %s\n",gai_strerror(err));
 		exit(2);
 	}
 
@@ -63,7 +99,7 @@ int ext_out (void){
 		char hotec[NI_MAXHOST]; char portc[NI_MAXSERV];
 		err = getnameinfo((struct sockaddr*)&client,len,hotec,NI_MAXHOST,portc,NI_MAXSERV,0);
 		if (err < 0 ){
-			fprintf(stderr,"rÃ©solution client (%i): %s\n",n,gai_strerror(err));
+			fprintf(stderr,"résolution client (%i): %s\n",n,gai_strerror(err));
 		}
 		else{
 			fprintf(stderr,"accept! (%i) ip=%s port=%s\n",n,hotec,portc);
@@ -73,39 +109,7 @@ int ext_out (void){
 	}
 }
 
-	/* echo des messages reÃ§us (le tout via le descripteur f) */
-void echo(int f, char* hote, char* port)
-{
-	ssize_t lu; /* nb d'octets reÃ§us */
-	char msg[MAXLIGNE+1]; /* tampons pour les communications */
-	char tampon[MAXLIGNE+1];
-	int pid = getpid(); /* pid du processus */
-	int compteur=0;
 
-
-	do { /* Faire echo et logguer */
-		lu = recv(f,tampon,MAXLIGNE,0);
-		if (lu > 0 )
-		{
-			compteur++;
-			tampon[lu] = '\0';
-			/* log */
-			fprintf(stderr,"[%s:%s](%i): %3i :%s",hote,port,pid,compteur,tampon);
-			snprintf(msg,MAXLIGNE,"> %s",tampon);
-			/* echo vers la sortie standard */
-			fprintf(stdout,"%s", msg);
-		} 
-		else {
-			break;
-		}
-	} 
-	while ( 1 );
-
-	/* le correspondant a quittÃ© */
-	send(f,CIAO,strlen(CIAO),0);
-	close(f);
-	fprintf(stderr,"[%s:%s](%i): TerminÃ©.\n",hote,port,pid);
-}
 
 
 

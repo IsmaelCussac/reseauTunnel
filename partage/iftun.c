@@ -26,7 +26,7 @@ int tun_alloc(char *dev)
          *        IFF_NO_PI - Do not provide packet information  
          */
          
-	ifr.ifr_flags = IFF_TUN | IFF_NO_PI; 
+	ifr.ifr_flags = IFF_TUN ; 
 
 	if( *dev )
 		strncpy(ifr.ifr_name, dev, IFNAMSIZ);
@@ -43,14 +43,15 @@ int tun_alloc(char *dev)
 /* Recopie perpétuellement toutes les données lisibles sur src dans le fichier décrit par dst*/
 int tun_copy (int src, int dest){
 	
-	printf("read %d\n", src);
+
 	char *buf = malloc(IFNAMSIZ*sizeof(char));
-	if(read(src, buf, IFNAMSIZ) < 0){
+	int r = read(src, buf, IFNAMSIZ);
+	if(r < 0){
 		perror("Read");
 		exit(1);
 	}
-	printf("write %d\n", dest);
-	if(write (dest, buf, IFNAMSIZ) < 0){
+	
+	if(write (dest, buf, r) < 0){
 		perror("Write");
 		exit(1);
 	}
