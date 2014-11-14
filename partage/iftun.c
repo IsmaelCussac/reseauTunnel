@@ -41,11 +41,12 @@ int tun_alloc(char *dev)
 
 
 /* Recopie perpétuellement toutes les données lisibles sur src dans le fichier décrit par dst*/
-int tun_copy (int src, int dest){
+int tun_copy (int src, int dest, char* buf){
 	
 
-	char *buf = malloc(IFNAMSIZ*sizeof(char));
+	//char *buf = malloc(IFNAMSIZ*sizeof(char));
 	int r = read(src, buf, IFNAMSIZ);
+	
 	if(r < 0){
 		perror("Read");
 		exit(1);

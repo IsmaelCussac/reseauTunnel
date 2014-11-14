@@ -1,4 +1,5 @@
 #include "extremite.h"
+#include "iftun.h"
 
 /* taille maximale des lignes */
 #define MAXLIGNE 80
@@ -113,33 +114,74 @@ int ext_out (void){
 
 
 
-int ext_in(int port, char* addrIp, int fd)
+int ext_in(char* hote, char* port, int fdtun)
 {
+	
 	char *buf = malloc(IFNAMSIZ*sizeof(char));
-	struct sockaddr_in sin;
-	int soc = socket(AF_INET, SOCK_STREAM, 0);
-	if(soc == -1)
-	{
-		printf("error opening socket");
-		return -1;
+	char *buf2 = malloc(IFNAMSIZ*sizeof(char));
+	struct sockaddr_in6 sin;
+	char ip[INET6_ADDRSTRLEN]; /* adresse IPv6 en notation pointée */
+	struct addrinfo *resol; /* struct pour la résolution de nom */
+	int s, k, k2; /* descripteur de socket */
+
+  /* Résolution de l'hôte */
+  if ( getaddrinfo(hote,port,NULL, &resol) < 0 ){
+    perror("résolution adresse");
+    exit(2);
+  }
+
+  /* On extrait l'addresse IP */
+  if(inet_ntop(AF_INET6, resol, ip, INET6_ADDRSTRLEN)==NULL){
+    perror("ntop");
+    exit(18); 
+  }
+
+
+  /* Création de la socket, de type TCP / IP */
+  /* On ne considère que la première adresse renvoyée par getaddrinfo */
+  if ((s=socket(resol->ai_family,resol->ai_socktype, resol->ai_protocol))<0) {
+    perror("allocation de socket");
+    exit(3);
+  }
+  fprintf(stderr,"le n° de la socket est : %i\n",s);
+
+  /* Connexion */
+  fprintf(stderr,"Essai de connexion à %s (%s) sur le port %s\n\n",
+	  hote,ip,port);
+  if (connect(s,resol->ai_addr,sizeof(struct sockaddr_in6))<0) {
+    perror("connection");
+    exit(4);
+  }
+  freeaddrinfo(resol); /* /!\ Libération mémoire */
+
+
+	while (1) {
+		k = tun_copy(fdtun, s, buf);
+		k2 = tun_copy (s, 1, buf2);
 	}
-	
-	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = 0;
-	sin.sin_addr.s_addr = inet_addr(addrIp);
-	sin.sin_family = AF_INET;
-	
-	if(bind(soc, (struct sockaddr *)&sin,sizeof(struct sockaddr_in) ) == -1)
-	{
-		printf("error binding socket");
-		return -1;
-	}
-	
-	read(fd, buf, IFNAMSIZ);
-	
-	int r = sendto (soc, buf, sizeof(buf), 0, (struct sockaddr *) sin.sin_addr.s_addr, sizeof(buf));
-	if(r<0){
-		perror("Envoie dans socket");
-        exit(1);
-	}
+/*	int soc = socket(AF_INET6, SOCK_STREAM, 0);*/
+/*	if(soc == -1)*/
+/*	{*/
+/*		printf("error opening socket");*/
+/*		return -1;*/
+/*	}*/
+/*	*/
+/*	sin.sin_port = htons(port);*/
+/*	sin.sin_addr.s_addr = 0;*/
+/*	sin.sin_addr.s_addr = inet_addr6(addrIp);*/
+/*	sin.sin_family = AF_INET6;*/
+/*	*/
+/*	if(bind(soc, (struct sockaddr *)&sin,sizeof(struct sockaddr_in6) ) == -1)*/
+/*	{*/
+/*		printf("error binding socket");*/
+/*		return -1;*/
+/*	}*/
+/*	*/
+/*	read(fd, buf, IFNAMSIZ);*/
+/*	*/
+/*	int r = send (soc, buf, sizeof(buf), 0, (struct sockaddr *) sin.sin_addr.s_addr, sizeof(buf));*/
+/*	if(r<0){*/
+/*		perror("Envoie dans socket");*/
+/*        exit(1);*/
+/*	}*/
 }

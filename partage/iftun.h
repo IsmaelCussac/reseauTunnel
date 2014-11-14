@@ -13,7 +13,7 @@
 
 
 int tun_alloc(char *dev);
-int tun_copy (int src, int dest);
+int tun_copy (int src, int dest, char * buf);
 
 
 #endif

@@ -15,7 +15,7 @@
 #include <netdb.h>
 
 int ext_out(void);
-int ext_in(int port, char* addrIp, int fd);
+int ext_in(char* hote, char* port, int fdtun);
 void echo(int f, char* hote, char* port);
 
 

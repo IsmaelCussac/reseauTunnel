@@ -51,3 +51,5 @@ Running /etc/init.d/networking restart is deprecated because it may not re-enabl
 Reconfiguring network interfaces...done.
 Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
 Reconfiguring network interfaces...done.
+Running /etc/init.d/networking restart is deprecated because it may not re-enable some interfaces ... (warning).
+Reconfiguring network interfaces...done.
