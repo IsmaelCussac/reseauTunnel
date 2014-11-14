@@ -30,3 +30,7 @@ ip route del default:
    cmd:
    - run    
                
+# ajout route statique IPV6
+ip -6 route add fc00:1234:2::/64 via fc00:1234:1::26:
+  cmd:
+    - run
