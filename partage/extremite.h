@@ -19,7 +19,7 @@
 #include <netdb.h>
 
 
-int ext_out (char* port);
+int ext_out (char* port, int fd);
 int ext_in(char* hote, char* port, int fdtun);
 void echo(int f, char* hote, char* port);
 

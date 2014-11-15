@@ -40,6 +40,11 @@ net.ipv4.ip_forward:
 ip route add 172.16.2.160/28 via 172.16.2.183:
    cmd:
    - run    
+
+# ajout route statique IPV6
+ip -6 route add fc00:1234:1::/64 via fc00:1234:2::26:
+  cmd:
+    - run
   
 ip route del default:
    cmd:
