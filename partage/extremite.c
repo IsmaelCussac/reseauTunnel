@@ -1,13 +1,8 @@
 #include "extremite.h"
 #include "iftun.h"
 
-/* taille maximale des lignes */
-#define MAXLIGNE 80
-#define CIAO "Au revoir ...\n"
-#define MAX 1500
-
 /* echo des messages recus (le tout via le descripteur f) */
-void echo(int f, char* hote, char* port)
+void echo(int f, char* ipServ, char* port)
 {
 	ssize_t lu; 			/* nb d'octets reÃ§us */
 	char msg[MAXLIGNE+1]; 	/* tampons pour les communications */
@@ -23,7 +18,7 @@ void echo(int f, char* hote, char* port)
 			compteur++;
 			tampon[lu] = '\0';
 			/* log */
-			fprintf(stderr,"[%s:%s](%i): %3i :%s",hote,port,pid,compteur,tampon);
+			fprintf(stderr,"[%s:%s](%i): %3i :%s",ipServ,port,pid,compteur,tampon);
 			snprintf(msg,MAXLIGNE,"> %s",tampon);
 			/* echo vers la sortie standard */
 			fprintf(stdout,"%s", msg);
@@ -37,7 +32,7 @@ void echo(int f, char* hote, char* port)
 	/* le correspondant a quittÃ© */
 	send(f,CIAO,strlen(CIAO),0);
 	close(f);
-	fprintf(stderr,"[%s:%s](%i): Terminé.\n",hote,port,pid);
+	fprintf(stderr,"[%s:%s](%i): Terminé.\n",ipServ,port,pid);
 }
 
 int ext_out (char* port, int fd){
@@ -93,11 +88,11 @@ int ext_out (char* port, int fd){
 		/* attendre et gerer indefiniment les connexions entrantes */
 		len = sizeof(struct sockaddr_in6);
 		n = accept(s, (struct sockaddr *)&client, (socklen_t*)&len);
-		if( n< 0 ) {
+		if(n < 0 ) {
 			perror("accept");
 			exit(7);
 		}
-
+		printf("Connecté\n");
 		/* Nom rÃ©seau du client */
 		char hotec[NI_MAXHOST]; 
 		char portc[NI_MAXSERV];
@@ -109,7 +104,7 @@ int ext_out (char* port, int fd){
 			fprintf(stderr,"accept! (%i) ip=%s port=%s\n", n, hotec,portc);
 		}
 
-		/* traitement */
+		/* Recopie perpétuellement les packets des sockets dans le tunel */
 		while(1){
 			tun_copy(n, fd, buf);
 			tun_copy(n, 1, buf);
@@ -121,16 +116,16 @@ int ext_out (char* port, int fd){
 
 
 
-int ext_in(char* hote, char* port, int fdtun)
+int ext_in(char* ipServ, char* port, int fdTun)
 {
 	
 	char buf[MAX];
 	char ip[INET6_ADDRSTRLEN]; 			/* adresse IPv6 en notation pointée */
 	struct addrinfo *resol; 			/* struct pour la résolution de nom */
-	int s, k; 							/* descripteur de socket */
+	int soc, k; 							/* descripteur de socket */
 
 	/* Résolution de l'hôte */
-	if (getaddrinfo(hote,port,NULL, &resol) < 0 ){
+	if (getaddrinfo(ipServ, port, NULL, &resol) < 0 ){
 		perror("résolution adresse");
 		exit(2);
 	}
@@ -140,30 +135,30 @@ int ext_in(char* hote, char* port, int fdtun)
 
 	/* Création de la socket, de type TCP / IP */
 	/* On ne considere que la première adresse renvoyee par getaddrinfo */
-	s = socket(resol->ai_family, resol->ai_socktype, resol->ai_protocol);
-	if (s < 0) {
+	soc = socket(resol->ai_family, resol->ai_socktype, resol->ai_protocol);
+	if (soc < 0) {
 		perror("allocation de socket");
 		exit(3);
 	}
-	fprintf(stderr,"le n° de la socket est : %i\n",s);
+	fprintf(stderr,"le n° de la socket est : %i\n",soc);
 
 	/* Connexion */
-	fprintf(stderr,"Essai de connexion à %s (%s) sur le port %s \n\n", hote, ip, port);
-
-	int c = connect(s, resol->ai_addr, sizeof(struct sockaddr_in6));
+	fprintf(stderr,"Essai de connexion à %s (%s) sur le port %s \n\n", ipServ, ip, port);
+	int c = connect(soc, resol->ai_addr, sizeof(struct sockaddr_in6));
 	if (c < 0) {
 		perror("connection");
 		exit(4);
 	}
-	printf("Connecte\n");
+	printf("Connecté\n");
 
 	freeaddrinfo(resol); 		/* /!\ Libération mémoire */
 
+	/* Recopie perpétuellement les packets du tunel dans la socket */
 	while (1) {
-		k = tun_copy(fdtun, s, buf);
+		tun_copy(fdTun, soc, buf);
 	}
 
-	close(s);
+	close(soc);
 
 	return 0;
 

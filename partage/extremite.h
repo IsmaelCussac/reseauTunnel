@@ -18,6 +18,9 @@
 #include <sys/types.h>
 #include <netdb.h>
 
+#define MAXLIGNE 80
+#define CIAO "Au revoir ...\n"
+
 
 int ext_out (char* port, int fd);
 int ext_in(char* hote, char* port, int fdtun);

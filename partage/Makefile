@@ -5,25 +5,16 @@ CFLAGS = -Wall -W -std=c99 -pedantic
 OBJ = iftun.o extremite.o
 
 
-all: test_iftun1 test_iftun2 test_iftun0 test_iftun_serveur
+all: tunnel46d
 
 extremite.o : extremite.h extremite.c 
 	$(CC) $(CCFLAGS) -c extremite.c 
 
 iftun.o : iftun.h iftun.c 
 	$(CC) $(CCFLAGS) -c iftun.c 
-	
-test_iftun0 :  test_iftun0.c $(OBJ)
-	$(CC) $(CCFLAGS) -o test_iftun0 test_iftun0.c $(OBJ)
 
-test_iftun1 :  test_iftun1.c $(OBJ)
-	$(CC) $(CCFLAGS) -o test_iftun1 test_iftun1.c $(OBJ)
-	
-test_iftun2 :  test_iftun2.c $(OBJ)
-	$(CC) $(CCFLAGS) -o test_iftun2 test_iftun2.c $(OBJ)
-	
-test_iftun_serveur :  test_iftun_serveur.c $(OBJ)
-	$(CC) $(CCFLAGS) -o test_iftun_serveur test_iftun_serveur.c $(OBJ)
+tunnel46d :  tunnel46d.c $(OBJ)
+	$(CC) $(CCFLAGS) -o tunnel46d tunnel46d.c $(OBJ)
 
 
 clean:
