@@ -7,36 +7,38 @@
 	Ismaël CUSSAC
 */
 /*
-./tunnel46d 123 fc00:1234:2::36 172.16.1.1 1 | hexdump -C
-./tunnel46d 123 fc00:1234:1::16 172.16.1.2 2 | hexdump -C
+Pour lancer les tunnels:
+
+./tunnel46d `cat VM1-6.txt` sur VM1-6
+./tunnel46d `cat VM3-6.txt` sur VM3-6
 */
 
 int main (int argc, char **argv){
 
-	if(argc != 5){
-		printf("Usage: %s port ipServeur ipTun machine\n", argv[0]);
+	if(argc != 6){
+		printf("Usage: %s port ipServeur ipTun ipTun_Sortie LAN_Sortie\n", argv[0]);
 		exit(1);
 	}
 
 	char *port = argv[1];
 	char *ipServ = argv[2];
 	char *ipTun = argv[3];
-	char *machine = argv[4];
+	char *ipTunSortie = argv[4];
+	char *lan = argv[5];
+	
 	char command[100];
 	char dev2[MAX];
 	char buf[MAX];
 	int fdTun;
-	strcpy(dev2,"tun%d");
+	strcpy(dev2,"tun0");
 	fdTun = tun_alloc(dev2);
 	
-	if(strcmp(machine,"1")){
-		strcpy(command, "./configure-tun.sh ");
-		strcat(command, ipTun);
-	}
-	else{
-		strcpy(command, "./configure-tun1.sh ");
-		strcat(command, ipTun);
-	}
+	strcpy(command, "./configure-tun.sh ");
+	strcat(command, ipTun);
+	strcat(command, " ");
+	strcat(command, lan);
+	strcat(command, " ");
+	strcat(command, ipTunSortie);
 	
 	system(command);
 		

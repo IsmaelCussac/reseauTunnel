@@ -16,7 +16,6 @@ int tun_alloc(char *dev)
   
         /* Flags: IFF_TUN   - TUN device (no Ethernet headers) 
          *        IFF_TAP   - TAP device  
-         *
          *        IFF_NO_PI - Do not provide packet information  
          */
          

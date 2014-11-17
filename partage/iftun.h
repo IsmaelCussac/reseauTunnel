@@ -16,6 +16,7 @@
 
 int tun_alloc(char *dev);
 void tun_copy (int src, int dest, char * buf);
+void tun_copy_inv(int src, int dest, char* buf);
 
 
 #endif

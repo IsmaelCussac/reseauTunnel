@@ -35,6 +35,7 @@ void echo(int f, char* ipServ, char* port)
 	fprintf(stderr,"[%s:%s](%i): Terminé.\n",ipServ,port,pid);
 }
 
+/* Fait office de serveur écoutant perpétuellement des sockets entrantes puis les écrit dans tun0 local */ 
 int ext_out (char* port, int fd){
 
 	char buf[MAX]; 			/* tampons pour les communications */
@@ -92,7 +93,6 @@ int ext_out (char* port, int fd){
 			perror("accept");
 			exit(7);
 		}
-		printf("Connecté\n");
 		/* Nom reseau du client */
 		char hotec[NI_MAXHOST]; 
 		char portc[NI_MAXSERV];
@@ -107,15 +107,13 @@ int ext_out (char* port, int fd){
 		/* Recopie perpétuellement les packets des sockets dans le tunel */
 		while(1){
 			tun_copy_inv(n, fd, buf);
-			tun_copy(n, 1, buf);
 		}
-	//	echo(n,hotec,portc);
 	}
 	return EXIT_SUCCESS;
 }
 
 
-
+/* Envoie des sockets au serveur depuis tun0 */
 int ext_in(char* ipServ, char* port, int fdTun)
 {
 	
