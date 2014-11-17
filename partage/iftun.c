@@ -40,12 +40,12 @@ void tun_copy (int src, int dest, char* buf){
 	
 	if(r < 0){
 		perror("Read");
-		exit(1);
+
 	}
 	
 	if(write (dest, buf, r) < 0){
 		perror("Write");
-		exit(1);
+
 	}
 }
 
@@ -55,12 +55,12 @@ void tun_copy_inv(int src, int dest, char* buf){
 	
 	if(r < 0){
 		perror("Read");
-		exit(1);
+
 	}
 	
 	if(write (dest, buf, r) < 0){
 		perror("Write");
-		exit(1);
+
 	}
 }
 

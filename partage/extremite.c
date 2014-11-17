@@ -109,7 +109,8 @@ int ext_out (char* port, int fd){
 			tun_copy_inv(n, fd, buf);
 		}
 	}
-	return EXIT_SUCCESS;
+	close(s);
+	return 0;
 }
 
 

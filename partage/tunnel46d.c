@@ -17,6 +17,8 @@ int main (int argc, char **argv){
 
 	if(argc != 6){
 		printf("Usage: %s port ipServeur ipTun ipTun_Sortie LAN_Sortie\n", argv[0]);
+		printf("ou\n");
+		printf("Usage: %s `cat NOM_VM.txt`\n", argv[0]);
 		exit(1);
 	}
 
@@ -30,15 +32,10 @@ int main (int argc, char **argv){
 	char dev2[MAX];
 	char buf[MAX];
 	int fdTun;
-	strcpy(dev2,"tun0");
+	strcpy(dev2,"tun%d");
 	fdTun = tun_alloc(dev2);
 	
-	strcpy(command, "./configure-tun.sh ");
-	strcat(command, ipTun);
-	strcat(command, " ");
-	strcat(command, lan);
-	strcat(command, " ");
-	strcat(command, ipTunSortie);
+	sprintf(command, "./configure-tun.sh %s %s %s %s", ipTun, lan,ipTunSortie, dev2);
 	
 	system(command);
 		
@@ -52,7 +49,7 @@ int main (int argc, char **argv){
 	else if(f == 0){
 		sleep(5);
 		in = ext_in(ipServ, port, fdTun);
-		}
+	}
 	else
 		out = ext_out(port, fdTun);
 	return 0;
