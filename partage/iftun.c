@@ -37,7 +37,7 @@ int tun_alloc(char *dev)
 /* Recopie perpétuellement toutes les données lisibles sur src dans le fichier décrit par dst*/
 void tun_copy (int src, int dest, char* buf){
 	
-	int r = read(src, buf, IFNAMSIZ);
+	int r = read(src, buf, MAX);
 	
 	if(r < 0){
 		perror("Read");
@@ -49,3 +49,19 @@ void tun_copy (int src, int dest, char* buf){
 		exit(1);
 	}
 }
+
+void tun_copy_inv(int src, int dest, char* buf){
+	
+	int r = recv(src, buf, MAX, 0);
+	
+	if(r < 0){
+		perror("Read");
+		exit(1);
+	}
+	
+	if(write (dest, buf, r) < 0){
+		perror("Write");
+		exit(1);
+	}
+}
+

@@ -31,6 +31,14 @@ eth2:
 ip -6 route add fc00:1234:2::/64 via fc00:1234:1::26:
   cmd:
     - run
+    
+
+
+# active le relai ipv4 
+net.ipv4.ip_forward:
+  sysctl:
+    - present
+    - value: 1
 
 ip route del default:
    cmd:

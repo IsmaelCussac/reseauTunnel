@@ -93,7 +93,7 @@ int ext_out (char* port, int fd){
 			exit(7);
 		}
 		printf("Connecté\n");
-		/* Nom rÃ©seau du client */
+		/* Nom reseau du client */
 		char hotec[NI_MAXHOST]; 
 		char portc[NI_MAXSERV];
 		err = getnameinfo((struct sockaddr*)&client, len, hotec, NI_MAXHOST, portc, NI_MAXSERV, 0);
@@ -101,12 +101,12 @@ int ext_out (char* port, int fd){
 			fprintf(stderr,"résolution client (%i): %s\n", n, gai_strerror(err));
 		}
 		else{
-			fprintf(stderr,"accept! (%i) ip=%s port=%s\n", n, hotec,portc);
+			fprintf(stderr,"accept! (%i) ip=%s port=%s\n", n, hotec, portc);
 		}
 
 		/* Recopie perpétuellement les packets des sockets dans le tunel */
 		while(1){
-			tun_copy(n, fd, buf);
+			tun_copy_inv(n, fd, buf);
 			tun_copy(n, 1, buf);
 		}
 	//	echo(n,hotec,portc);

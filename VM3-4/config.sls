@@ -8,9 +8,6 @@ eth1:
    - proto: none
    - ipaddr: 172.16.2.163
    - netmask: 255.255.255.240
-   - dns:
-      - 139.124.5.132
-      - 139.124.5.131 
 
  
 #vers VM3-6
@@ -22,12 +19,17 @@ eth2:
    - proto: none
    - ipaddr: 172.16.2.183
    - netmask: 255.255.255.240
-   - gateway: 10.0.2.2
+   - gateway: 172.16.2.186
 
 
 ip route add 172.16.2.128/28 via 172.16.2.162:
    cmd:
    - run   
+   
+ip route add 172.16.2.144/28 via 172.16.2.186:
+   cmd:
+   - run
+
    
 # active le relai ipv4 
 net.ipv4.ip_forward:
